@@ -2,14 +2,13 @@ from app_functions import *
 
 
 def chose_gene(GENES, GENESNAME):
-
     _style = """<style>.css-qrbaxs {margin-bottom: 0px; min-height: 0.5rem;}</style>"""
     st.markdown(_style, unsafe_allow_html=True)
 
     header = '<span style="font-size:110%; font-weight: bold;">chose gene to plot:</span>'
     st.markdown(header, unsafe_allow_html=True)
 
-    cols = st.columns([1,1,0.1,1.9])
+    cols = st.columns([1, 1, 0.1, 1.9])
 
     with cols[0]:
         choice = st.radio('Input method:', options=['Type gene name', 'Select from list'])
@@ -50,34 +49,28 @@ def chose_gene(GENES, GENESNAME):
 
 
 def legend():
-
-
     legend_header = '<span style="font-size:150%; font-weight: bold;">Figure legend:</span>'
     st.markdown(legend_header, unsafe_allow_html=True)
     st.write('##')
 
-    cols = st.columns([0.22,0.03,0.75])
+    cols = st.columns([0.22, 0.03, 0.75])
 
     with cols[0]:
-
         legendfile = get_legend_filepath()
         header_html = "<img src='data:image/png;base64,{}' class='img-fluid' width=180>"
         st.markdown(header_html.format(img_to_bytes(legendfile)), unsafe_allow_html=True)
 
     with cols[2]:
-
         legend_txt = 'Each alignment start position observed was plotted at the corresponding genomic position with ' \
                      'the number of supporting reads. The dots are colored according to the observed trans-splicing ' \
-                     'events with red indicating a majority of SL reads, green a majority of endogenous hairpin reads ' \
-                     'and blue reads with no evidence for either. '
+                     'events with red indicating a majority of SL reads, green a majority of endogenous hairpin ' \
+                     'reads and blue reads with no evidence for either. '
 
         legend_html = f'<span style="font-size:120%;">{legend_txt}</span>'
         st.markdown(legend_html, unsafe_allow_html=True)
 
 
-
 def display_error():
-
     gene_header = ("<div style=\"background: #ffe2e0; font-size: 16px; padding: 10px; border-radius: 10px; "
                    "border: 1px solid DarkRed; margin: 10px;\"><div style=\"color: darkred;\"><strong>Requested "
                    "gene plot cannot be generated.</strong></div><br />This error can appear because:<br />- The "
@@ -89,7 +82,6 @@ def display_error():
 
 
 def plot_settings():
-
     st.sidebar.write('### 2. Customize plot:')
 
     atg_option = st.checkbox('Show known ATG positions (WS270)', value=True)
@@ -98,20 +90,17 @@ def plot_settings():
 
 
 def display_gene_infos(gene, refgene):
-
-    cols = st.columns([1,1,2])
+    cols = st.columns([1, 1, 2])
     with cols[0]:
-
-        gene_header = '<div style="background: ghostwhite; font-size: 18px; padding: 10px; border-radius: 5px; border: 1px solid lightgray; margin: 10px;">' \
+        gene_header = '<div style="background: ghostwhite; font-size: 18px; padding: 10px; border-radius: 5px; ' \
+                      'border: 1px solid lightgray; margin: 10px;">' \
                       f'<b>Gene:</b> {refgene} ({gene})<br></div>'
-
 
         st.markdown(gene_header, unsafe_allow_html=True)
     st.markdown('<br>', unsafe_allow_html=True)
 
 
 def interactive_plots():
-
     # open ref files and cache them
     genes, exons, dataset, GENES, GENESNAME, ATGPOSITIONS = get_reference_files()
 
@@ -119,7 +108,7 @@ def interactive_plots():
     gene, refgene, atg_option = chose_gene(GENES, GENESNAME)
 
     # checking gene name input
-    if gene is None and refgene is None :
+    if gene is None and refgene is None:
         display_error()
 
     else:
@@ -136,7 +125,5 @@ def interactive_plots():
         legend()
 
 
-
 if __name__ == '__main__':
-
     interactive_plots()

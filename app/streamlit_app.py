@@ -8,16 +8,16 @@ from page_download_plots import download_plots
 
 def navigation_bar():
 
-    styles_settings = {'icon': {"color":"#223170"},
+    styles_settings = {'icon': {"color": "#223170"},
                        'nav-link': {"--hover-color": "#edf0fa"},
-                       'nav-link-selected': {'background-color':'#edf0fa', "color":'#223170'}}
+                       'nav-link-selected': {'background-color': '#edf0fa', "color": '#223170'}}
 
     with st.sidebar:
 
         st.markdown('<div style="font-size: 24px; color:#223170"><b>Navigation:<b></div>', unsafe_allow_html=True)
 
-        page = option_menu('', menu_icon='', options=['Informations','Interactive plot','Download plot(s)'],
-                           icons=['info-circle-fill','card-image','file-earmark-arrow-down-fill'],
+        page = option_menu('', menu_icon='', options=['Informations', 'Interactive plot', 'Download plot(s)'],
+                           icons=['info-circle-fill', 'card-image', 'file-earmark-arrow-down-fill'],
                            styles=styles_settings)
 
     return page
@@ -41,8 +41,6 @@ def app_settings():
     st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 
-
-
 def main():
 
     # general settings
@@ -60,7 +58,6 @@ def main():
 
     elif page == 'Download plot(s)':
         download_plots()
-
 
 
 if __name__ == '__main__':
