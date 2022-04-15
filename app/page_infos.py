@@ -34,8 +34,8 @@ def show_abstract():
 
 
 def show_biorxiv():
-    url = ''
-    biorxiv = f'<span style="font-size:100%;">See Manuscript on <a href="{url}">Biorxiv</a>.</span>'
+    url = 'https://www.biorxiv.org/content/10.1101/2022.04.14.488332v1'
+    biorxiv = f'<span style="font-size:100%;">See Manuscript on <b><a href="{url}">BioRxiv</a></b>.</span>'
     st.markdown(biorxiv, unsafe_allow_html=True)
 
 
