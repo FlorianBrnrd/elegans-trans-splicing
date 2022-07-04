@@ -6,12 +6,9 @@ from fpdf import FPDF
 
 
 def parse_input(_input):
-    if type(_input) == str:
-        input_list = _input.splitlines()
-
-    else:
+    if type(_input) != str:
         _input = _input.read().decode('UTF-8')
-        input_list = _input.splitlines()
+    input_list = _input.splitlines()
 
     input_list = list(filter(None, input_list))
     return input_list
@@ -34,16 +31,8 @@ def convert_input(input_list, GENES, GENESNAME):
 
 
 def validate_input(gene_list, GENES):
-    invalid = []
-
-    for g in gene_list:
-        if g not in GENES:
-            invalid.append(g)
-
-    if len(invalid) > 0:
-        return False, invalid
-    else:
-        return True, invalid
+    invalid = [g for g in gene_list if g not in GENES]
+    return (False, invalid) if invalid else (True, invalid)
 
 
 def invalid_name_error(gene_list, container):
@@ -71,7 +60,6 @@ def download_plots():
     genes, exons, dataset, GENES, GENESNAME, ATGPOSITIONS = get_reference_files()
 
     #### custom css styling
-
     _style = """<style>.css-qrbaxs {margin-bottom: 0px; min-height: 0.5rem;}</style>"""
     st.markdown(_style, unsafe_allow_html=True)
 
@@ -104,10 +92,7 @@ def download_plots():
     latest_iteration.markdown(' ')
     processing = st.empty()
 
-    if _input:
-        generate = processing.button('Validate')
-    else:
-        generate = False
+    generate = processing.button('Validate') if _input else False
 
     #### processing
 
@@ -131,19 +116,21 @@ def download_plots():
             pdf = FPDF(format=(180, 240), orientation="landscape")
 
             # create progress bar
-            n = 0
-            percent = 0
-            my_bar = processing.progress(percent)
-
+            my_bar = processing.progress(0)
             nb = len(gene_list)
 
-            for refgene in processed_list:
+            for n, refgene in enumerate(processed_list, start=0):
+
                 common = GENESNAME[refgene]
 
+                # update text
                 titleplot = f'{common} ({refgene})' if common != refgene else str(refgene)
-
-                percent = round(n / nb * 100)
+                percent = round(n/ nb * 100)
                 latest_iteration.write(f'processing {titleplot} - Completed:{n}/{nb} ({percent}%)')
+
+                # update bar
+                prog = n / nb
+                my_bar.progress(prog)
 
                 gene_plot = plot_gene_start(dataset, refgene, genes, exons, ATGPOSITIONS, show_atg=True)
 
@@ -151,25 +138,20 @@ def download_plots():
                                               title_font_size=30, title_font_family='Roboto', title_font_color='black')
 
                 # save file
-                fig.write_image("fig.png", width=1200, height=900, scale=2)
+                fig.write_image(f"fig{n}.png", width=1200, height=900, scale=2)
 
                 # add to report
                 pdf.add_page()
-                pdf.image('fig.png', x=15, y=20, h=150, w=200)
+                pdf.image(f"fig{n}.png", x=15, y=20, h=150, w=200)
 
-                # update bar
-                prog = n / nb
-                my_bar.progress(prog)
 
-                # remove to free space
-                os.remove("fig.png")
+                # remove figures when added to pdf report to free space
+                os.remove(f"fig{n}.png")
 
-                # increase counter
-                n = n + 1
 
             # finally
-            percent = round(n / nb * 100)
-            latest_iteration.write(f'Completed:{n}/{nb} ({percent}%)')
+            my_bar = processing.progress(100)
+            latest_iteration.write(f'Completed:{nb}/{nb} (100%)')
 
             pdf.output('plots_archive.pdf')
 
