@@ -36,37 +36,47 @@ A preprocessing notebook is available for generating the dataset table used in a
 
 A separate notebook was then generated for each of the figures shown in the paper as detailed above: 
 
-| Notebook                                                                                                        | Figure       | Title                                                             |
-|-----------------------------------------------------------------------------------------------------------------|--------------|-------------------------------------------------------------------|
-| [preprocessing](https://github.com/FlorianBrnrd/elegans-trans-splicing/blob/main/notebooks/preprocessing.ipynb) | -            |Pipeline for processing alignments and generating the dataset table |
-| [Fig1_notebook](https://github.com/FlorianBrnrd/elegans-trans-splicing/blob/main/notebooks/Fig1_notebook.ipynb) | Fig. 1a&d    |Measure of strand bias in direct-cDNA experiments                  |
-| [Fig1_notebook](https://github.com/FlorianBrnrd/elegans-trans-splicing/blob/main/notebooks/Fig1_notebook.ipynb) | Fig. 1b      |Measure of base quality in 5' soft-clip region and alignment region |
-| [Fig2_notebook](https://github.com/FlorianBrnrd/elegans-trans-splicing/blob/main/notebooks/Fig2_notebook.ipynb) | Fig. 2b      |Measure of total SL1 and SL2 variants detected in our reads        |
-| [Fig3_notebook](https://github.com/FlorianBrnrd/elegans-trans-splicing/blob/main/notebooks/Fig3_notebook.ipynb) | Fig. 3a      |Splice leader usage                                                |
-| [Fig3_notebook](https://github.com/FlorianBrnrd/elegans-trans-splicing/blob/main/notebooks/Fig3_notebook.ipynb) | Fig. 3b      |SL2 gene specificity                                               |
-| [Fig4_notebook](https://github.com/FlorianBrnrd/elegans-trans-splicing/blob/main/notebooks/Fig4_notebook.ipynb) | Fig. 4a      |Gene expression and trans-splicing status                          |
-| [Fig4_notebook](https://github.com/FlorianBrnrd/elegans-trans-splicing/blob/main/notebooks/Fig4_notebook.ipynb) | Fig. 4b      |Trans-splicing detection level                                     |
-| [Fig4_notebook](https://github.com/FlorianBrnrd/elegans-trans-splicing/blob/main/notebooks/Fig4_notebook.ipynb) | Fig. 4c      |Poorly trans spliced mRNA have a propensity to form a 5’ stem loop structure |
-| [Fig5_notebook](https://github.com/FlorianBrnrd/elegans-trans-splicing/blob/main/notebooks/Fig5_notebook.ipynb) | Fig. 5a      |Measure of base quality for SL, Hairpin and Unidentified reads     |
-| [Fig5_notebook](https://github.com/FlorianBrnrd/elegans-trans-splicing/blob/main/notebooks/Fig5_notebook.ipynb) | Fig. 5b      |Repartition of SL, Hairpin and Unidentified reads in dataset       |
-| [Fig5_notebook](https://github.com/FlorianBrnrd/elegans-trans-splicing/blob/main/notebooks/Fig5_notebook.ipynb) | Fig. 5c      |Schematic representation of the trans-splicing information         |
-| [SupFig_notebook](https://github.com/FlorianBrnrd/elegans-trans-splicing/blob/main/notebooks/SupFig_notebook.ipynb) | Sup. Fig. 2  |Identification of direct-cDNA sequencing adapters                  |
-| [SupFig_notebook](https://github.com/FlorianBrnrd/elegans-trans-splicing/blob/main/notebooks/SupFig_notebook.ipynb) | Sup. Fig. 3  |Measured length of 5’ and 3’ soft-clips                            |
-| [SupFig_notebook](https://github.com/FlorianBrnrd/elegans-trans-splicing/blob/main/notebooks/SupFig_notebook.ipynb) | Sup. Fig. 4a |Origin of supplementary alignments                                           |
-| [SupFig_notebook](https://github.com/FlorianBrnrd/elegans-trans-splicing/blob/main/notebooks/SupFig_notebook.ipynb) | Sup. Fig. 4b |Size distribution of supplementary alignments                                |
-| [SupFig_notebook](https://github.com/FlorianBrnrd/elegans-trans-splicing/blob/main/notebooks/SupFig_notebook.ipynb) | Sup. Fig. 5  |Measure of base quality across all sequencing experiments                    |
-| [SupFig_notebook](https://github.com/FlorianBrnrd/elegans-trans-splicing/blob/main/notebooks/SupFig_notebook.ipynb) | Sup. Fig. 6  |Strand bias in ONT direct-cDNA experiments                                   |
-| [SupFig_notebook](https://github.com/FlorianBrnrd/elegans-trans-splicing/blob/main/notebooks/SupFig_notebook.ipynb) | Sup. Fig. 7  |Method for evaluating base quality                                           |
-| [SupFig_notebook](https://github.com/FlorianBrnrd/elegans-trans-splicing/blob/main/notebooks/SupFig_notebook.ipynb) | Sup. Fig. 8  |high confidence SL matchs are located near the alignment start               |
-
+| Notebook                                                                                                                | Figure       | Title                                                                        |
+|-------------------------------------------------------------------------------------------------------------------------|--------------|------------------------------------------------------------------------------|
+| [pre-processing](https://github.com/FlorianBrnrd/elegans-trans-splicing/blob/main/notebooks/pre-processing.ipynb)       | -            | Pipeline for processing alignments and generating the dataset table          |
+| [Fig1_notebook](https://github.com/FlorianBrnrd/elegans-trans-splicing/blob/main/notebooks/Fig1_notebook.ipynb)         | Fig. 1b      | Measure of base quality in 5' soft-clip region and alignment region          |
+| [Fig2_notebook](https://github.com/FlorianBrnrd/elegans-trans-splicing/blob/main/notebooks/Fig2_notebook.ipynb)         | Fig. 2b      | Measure of total SL1 and SL2 variants detected in our reads                  |
+| [Fig3_notebook](https://github.com/FlorianBrnrd/elegans-trans-splicing/blob/main/notebooks/Fig3_notebook.ipynb)         | Fig. 3a      | Spliced leader usage                                                         |
+| [Fig3_notebook](https://github.com/FlorianBrnrd/elegans-trans-splicing/blob/main/notebooks/Fig3_notebook.ipynb)         | Fig. 3b      | SL2 gene specificity                                                         |
+| [Fig4_notebook](https://github.com/FlorianBrnrd/elegans-trans-splicing/blob/main/notebooks/Fig4_notebook.ipynb)         | Fig. 4a      | Gene expression and trans-splicing status                                    |
+| [Fig4_notebook](https://github.com/FlorianBrnrd/elegans-trans-splicing/blob/main/notebooks/Fig4_notebook.ipynb)         | Fig. 4b      | Trans-splicing detection level                                               |
+| [Fig4_notebook](https://github.com/FlorianBrnrd/elegans-trans-splicing/blob/main/notebooks/Fig4_notebook.ipynb)         | Fig. 4c      | Poorly trans spliced mRNA have a propensity to form a 5’ stem loop structure |
+| [Fig5_notebook](https://github.com/FlorianBrnrd/elegans-trans-splicing/blob/main/notebooks/Fig5_notebook.ipynb)         | Fig. 5a      | Measure of ratio SL/Hairpin                                                  |
+| [Fig5_notebook](https://github.com/FlorianBrnrd/elegans-trans-splicing/blob/main/notebooks/Fig5_notebook.ipynb)         | Fig. 5b      | Proportion of trans-spliced gene with various SL thresholds                  |
+| [Fig5_notebook](https://github.com/FlorianBrnrd/elegans-trans-splicing/blob/main/notebooks/Fig5_notebook.ipynb)         | Fig. 5c      | Read coverage for SL, Hairpin and Unidentified genes                         |
+| [Fig6_notebook](https://github.com/FlorianBrnrd/elegans-trans-splicing/blob/main/notebooks/Fig6_notebook.ipynb)         | Fig. 6       | Schematic representation of the trans-splicing information                   |
+| [SupFig1_notebook](https://github.com/FlorianBrnrd/elegans-trans-splicing/blob/main/notebooks/SupFig1_notebook.ipynb)   | Sup. Fig. 1  | Measure of strand bias in direct-cDNA experiments                            |
+| [SupFig2_notebook](https://github.com/FlorianBrnrd/elegans-trans-splicing/blob/main/notebooks/SupFig2_notebook.ipynb)   | Sup. Fig. 2b | Measured length of 5’ and 3’ soft-clips                                      |
+| [SupFig3_notebook](https://github.com/FlorianBrnrd/elegans-trans-splicing/blob/main/notebooks/SupFig3_notebook.ipynb)   | Sup. Fig. 3a | Quantification of sequencing adapters in soft-clips regions                  |
+| [SupFig3_notebook](https://github.com/FlorianBrnrd/elegans-trans-splicing/blob/main/notebooks/SupFig3_notebook.ipynb)   | Sup. Fig. 3b | Origin of supplementary alignments                                           |
+| [SupFig3_notebook](https://github.com/FlorianBrnrd/elegans-trans-splicing/blob/main/notebooks/SupFig3_notebook.ipynb)   | Sup. Fig. 3c | Size distribution of supplementary alignments                                |
+| [SupFig4_notebook](https://github.com/FlorianBrnrd/elegans-trans-splicing/blob/main/notebooks/SupFig4_notebook.ipynb)   | Sup. Fig. 4  | Measure of base quality across all sequencing experiments                    |
+| [SupFig5_notebook](https://github.com/FlorianBrnrd/elegans-trans-splicing/blob/main/notebooks/SupFig5_notebook.ipynb)   | Sup. Fig. 5a | Measure of read length and alignment length across experiments               |
+| [SupFig5_notebook](https://github.com/FlorianBrnrd/elegans-trans-splicing/blob/main/notebooks/SupFig5_notebook.ipynb)   | Sup. Fig. 5b | Measure of read coverage                                                     |
+| [SupFig6_notebook](https://github.com/FlorianBrnrd/elegans-trans-splicing/blob/main/notebooks/SupFig6_notebook.ipynb)   | Sup. Fig. 6a | Strand orientation for unidentified reads                                    |
+| [SupFig6_notebook](https://github.com/FlorianBrnrd/elegans-trans-splicing/blob/main/notebooks/SupFig6_notebook.ipynb)   | Sup. Fig. 6b | Length of 5’ soft-clips versus their alignment length                        |
+| [SupFig7_notebook](https://github.com/FlorianBrnrd/elegans-trans-splicing/blob/main/notebooks/SupFig7_notebook.ipynb)   | Sup. Fig. 7a | Single SL1 promotor - nlp-36 (B0464.3)                                       |
+| [SupFig7_notebook](https://github.com/FlorianBrnrd/elegans-trans-splicing/blob/main/notebooks/SupFig7_notebook.ipynb)   | Sup. Fig. 7b | Multiple SL1 promotors - M60.4                                               |
+| [SupFig7_notebook](https://github.com/FlorianBrnrd/elegans-trans-splicing/blob/main/notebooks/SupFig7_notebook.ipynb)   | Sup. Fig. 7c | Operon organization - rla-1 (Y37E3.8) & Y37E3.7                              |
+| [SupFig7_notebook](https://github.com/FlorianBrnrd/elegans-trans-splicing/blob/main/notebooks/SupFig7_notebook.ipynb)   | Sup. Fig. 7d | Differentially trans-spliced promoters - lev-11 (Y105E8B.1)                  |
+| [SupFig8_notebook](https://github.com/FlorianBrnrd/elegans-trans-splicing/blob/main/notebooks/SupFig8_notebook.ipynb)   | Sup. Fig. 8a | Measure of strand bias at each locus in SSP experiments                      |
+| [SupFig8_notebook](https://github.com/FlorianBrnrd/elegans-trans-splicing/blob/main/notebooks/SupFig8_notebook.ipynb)   | Sup. Fig. 8b | Unbiased locus presents a high concentration of SSP reads                    |
+| [SupFig8_notebook](https://github.com/FlorianBrnrd/elegans-trans-splicing/blob/main/notebooks/SupFig8_notebook.ipynb)   | Sup. Fig. 8c | Unbiased locus in SSP Exp. are found biased in SL1/NP Exp                    |
+| [SupFig9_notebook](https://github.com/FlorianBrnrd/elegans-trans-splicing/blob/main/notebooks/SupFig9_notebook.ipynb)   | Sup. Fig. 9 | Method for evaluating base quality                                           |
+| [SupFig10_notebook](https://github.com/FlorianBrnrd/elegans-trans-splicing/blob/main/notebooks/SupFig10_notebook.ipynb) | Sup. Fig. 10 | high confidence SL matchs are located near the alignment start               |
 
 &nbsp;
 
 ## Generating your own plots
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/florianbrnrd/elegans-trans-splicing/main/app/streamlit_app.py)
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://elegans-trans-splicing.streamlit.app/)
 
 This web-app allows you to generate and save plots for your genes of interests without having to run the notebooks.  
-The app was made using the streamlit library (see [streamlit_app.py](https://github.com/FlorianBrnrd/elegans-trans-splicing/blob/main/app/streamlit_app.py)) and is hosted via streamlit sharing.
+The app was made using the streamlit library (see [streamlit_app.py](https://elegans-trans-splicing.streamlit.app/)) and is hosted via streamlit sharing.
 
 &ensp;
 
