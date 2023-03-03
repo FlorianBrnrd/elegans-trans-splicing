@@ -12,12 +12,12 @@ def get_read_features_files():
 
     path = os.getcwd()
 
-    transcripts = pd.read_csv('/Users/florianbrnrd/PycharmProjects/elegans-trans-splicing/app/src/transcripts_length.tsv',
+    transcripts = pd.read_csv(f'{path}/app/src/transcripts_length.tsv',
                               index_col='transcript', sep='\t')
     TRANSCRIPTS = transcripts["size"].to_dict()
 
-    exons = pd.read_csv('/Users/florianbrnrd/PycharmProjects/elegans-trans-splicing/app/src/exon_coordinates_full.txt', sep='\t')
-    dataset = pd.read_csv('/Users/florianbrnrd/PycharmProjects/elegans-trans-splicing/app/src/features_dataset.tsv', sep='\t')
+    exons = pd.read_csv(f'{path}/app/src/exon_coordinates_full.txt', sep='\t')
+    dataset = pd.read_csv(f'{path}/app/src/features_dataset.tsv', sep='\t')
 
     return TRANSCRIPTS, exons, dataset
 
