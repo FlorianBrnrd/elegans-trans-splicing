@@ -102,7 +102,7 @@ def interactive_plots():
 
     # open ref files and cache them
     genes, exons, dataset, GENES, GENESNAME, ATGPOSITIONS = get_reference_files()
-    transcript_length, exons_coord, feature_dataset = get_read_features_files()
+    #transcript_length, exons_coord, feature_dataset = get_read_features_files()
 
     # chose gene to plot
     gene, refgene = chose_gene(GENES, GENESNAME)
