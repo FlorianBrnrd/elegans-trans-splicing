@@ -23,9 +23,11 @@ def get_read_features_files():
     return TRANSCRIPTS, exons, isoforms
 
 @st.cache_data(show_spinner=False)
-def get_features_dataset():
+def get_features_dataset(isoform):
     path = os.getcwd()
-    return pd.read_csv(f'{path}/app/src/features_dataset.tsv', sep='\t')
+
+    iter_csv = pd.read_csv(f'{path}/app/src/features_dataset.tsv', sep='\t', iterator=True, chunksize=1000)
+    return pd.concat([chunk[chunk['isoform'] == isoform] for chunk in iter_csv])
 
 
 def overlapping_exons(start, end, exon):
@@ -242,9 +244,9 @@ def chose_isoform_to_plot(gene, isoforms_table, transcript_length, exons_coord):
 
             print('download features table')
 
-            feature_dataset = get_features_dataset()
+            feature_dataset = get_features_dataset(isoform)
             sorting_col = ['isoform', 'transcriptomic_start', 'SC5']
-            isoform_features = feature_dataset[feature_dataset['isoform'] == isoform].sort_values(sorting_col, ascending=False).reset_index(drop=True)
+            isoform_features = feature_dataset.sort_values(sorting_col, ascending=False).reset_index(drop=True)
             return plot_read_features(isoform, isoform_features, transcript_length, exons_coord)
 
     else:
