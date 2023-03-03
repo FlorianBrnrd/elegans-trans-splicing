@@ -12,14 +12,10 @@ import plotly.io as pio
 
 def isoform_to_gene(isoform):
     match = re.search(r"\w+.\d+", isoform)
-
-    if match is not None:
-        return match.group(0)
-    else:
-        return None
+    return match[0] if match is not None else None
 
 
-@st.cache(show_spinner=False)
+@st.cache_data(show_spinner=False)
 def get_gene_ref(genes, GENES):
     GENESNAME = genes[genes['CDS'].isin(GENES)]
     GENESNAME['name'] = GENESNAME.apply(lambda x: x['name'] if x['name'] == x['name'] else x['CDS'], axis=1)
@@ -29,21 +25,14 @@ def get_gene_ref(genes, GENES):
     return GENESNAME
 
 
-@st.cache(show_spinner=False)
+@st.cache_data(show_spinner=False)
 def get_atg_position(atg):
     # convert transcript name to gene name
     atg['gene'] = atg['transcript'].apply(lambda x: isoform_to_gene(x))
-
-    # create dict
-    ATGPOSITIONS = {}
-    for gene, positions in atg.groupby('gene'):
-        pos = list(set(positions['CDS_start']))
-        ATGPOSITIONS[gene] = pos
-
-    return ATGPOSITIONS
+    return {gene: list(set(positions['CDS_start'])) for gene, positions in atg.groupby('gene')}
 
 
-@st.cache(show_spinner=False)
+@st.cache_data(show_spinner=False)
 def get_reference_files():
     path = os.getcwd()
 
@@ -53,30 +42,24 @@ def get_reference_files():
     atg = pd.read_csv(f'{path}/app/src/CDS_start_positions.tsv', sep='\t')
 
     GENES = list(set(dataset['gene']))
-
     GENESNAME = get_gene_ref(genes, GENES)
-
     ATGPOSITIONS = get_atg_position(atg)
 
     return genes, exons, dataset, GENES, GENESNAME, ATGPOSITIONS
 
 
-def get_legend_filepath():
+def get_legend_filepath(legend_type):
     path = os.getcwd()
-    filepath = f'{path}/app/src/legend.png'
-
-    return filepath
+    return f'{path}/app/src/legend.png' if legend_type == 'plot1' else f'{path}/app/src/features_legend.png'
 
 
 def overlapping_exons(start, end, exon):
     x, y = exon
-    if x <= start <= y or x <= end <= y:
-        return False
-    else:
-        return True
+    return not x <= start < y and not x <= end < y
 
 
 def plotly_gene_structure(fig, gene, genes_coord, exons_coord):
+
     # Select exons for gene of interest and remove duplicates
     exons_coord = exons_coord.loc[exons_coord['gene'] == gene].drop_duplicates(['start', 'end']).sort_values('start')
 
@@ -109,9 +92,8 @@ def plotly_gene_structure(fig, gene, genes_coord, exons_coord):
         if set_size == 0:
             exons_set.append((start, end))
 
-        else:
-            if all([overlapping_exons(start, end, exons_set[n]) for n in range(set_size)]):
-                exons_set.append((start, end))
+        elif all(overlapping_exons(start, end, exons_set[n]) for n in range(set_size)):
+            exons_set.append((start, end))
 
     strand = exons_coord['strand'].unique()[0]
 
@@ -184,6 +166,7 @@ def plotly_gene_structure(fig, gene, genes_coord, exons_coord):
 
 
 def plot_gene_start(dataset, gene, genes_coord, exons_coord, ATGPOSITION, show_atg=True):
+
     fig = make_subplots(rows=2, cols=1, row_heights=[2, 10], shared_xaxes=True, vertical_spacing=0.02)
 
     # plot gene model ---------------------------------
@@ -205,19 +188,17 @@ def plot_gene_start(dataset, gene, genes_coord, exons_coord, ATGPOSITION, show_a
     g = [i / 100 * 255 for i in list(gene_data['%hairpin'])]
     b = [i / 100 * 255 for i in list(gene_data['%unidentified'])]
     col = list(zip(r, g, b))
-    col = [f'rgb({r},{g},{b})' for r, g, b in [i for i in col]]
+    col = [f'rgb({r},{g},{b})' for r, g, b in list(col)]
 
     fig.add_trace(go.Scatter(x=x, y=y, mode='markers', marker=dict(color=col, size=10)), row=2, col=1)
 
     # plot ATG ---------------------------------
 
-    if show_atg:
-        if gene in ATGPOSITION:
+    if show_atg and gene in ATGPOSITION:
+        ATG = ATGPOSITION[gene]
 
-            ATG = ATGPOSITION[gene]
-
-            for _atg in ATG:
-                fig.add_vline(x=_atg, line_width=1.5, line_dash="dot", line_color="black", row=2, col=1, layer='below')
+        for _atg in ATG:
+            fig.add_vline(x=_atg, line_width=2, line_dash="dot", line_color="#36454F", row=2, col=1, layer='below')
 
     # add custom hovering infos ---------------------------------
 
@@ -246,21 +227,23 @@ def plot_gene_start(dataset, gene, genes_coord, exons_coord, ATGPOSITION, show_a
 
     _start = start - (length * 0.1)
     _end = end + (length * 0.1)
-    fig.update_layout(xaxis_range=[_start, _end], width=900, height=500, margin=dict(l=0, r=0, b=0, t=0))
+    max_val = max(y)
 
-    fig.update_yaxes(zeroline=False, showline=True, linewidth=1.2, linecolor='black', mirror=True,
+    fig.update_layout(xaxis_range=[_start, _end], yaxis2 = dict(range=[-(0.05*max_val), (max_val*1.05)]),
+                      width=890, height=500, margin=dict(l=0, r=10, b=0, t=0),
+                      plot_bgcolor="rgb(255,255,255,255)")
+
+    fig.update_yaxes(zeroline=False, showline=True, linewidth=1.2, linecolor='#36454F', mirror=True,
                      showgrid=True, gridwidth=0.5, gridcolor='lightgrey',
-                     tickformat=',', ticksuffix='</b>', tickfont=dict(size=14, color='black', family='Roboto'),
-                     ticks="outside", tickcolor='black', ticklen=5,
-                     title_font=dict(size=16, color='black', family='Roboto'))
+                     tickformat=',', ticks="outside", tickcolor='black', ticklen=5,
+                     tickfont=dict(size=12, color='#36454F', family='Roboto'),
+                     title_font=dict(size=16, color='#36454F', family='Roboto'))
 
-    fig.update_xaxes(zeroline=False, showline=True, linewidth=1.2, linecolor='black', mirror=True,
+    fig.update_xaxes(zeroline=False, showline=True, linewidth=1.2, linecolor='#36454F', mirror=True,
                      showgrid=True, gridwidth=0.5, gridcolor='lightgrey',
-                     tickformat=',', ticksuffix='bp', tickfont=dict(size=14, color='black', family='Roboto'),
+                     tickformat=',', ticksuffix='bp', tickfont=dict(size=12, color='#36454F', family='Roboto'),
                      ticks="outside", tickcolor='black', ticklen=5,
-                     title_font=dict(size=16, color='black', family='Roboto'))
-
-    fig.update_layout(plot_bgcolor="rgb(255,255,255,255)")
+                     title_font=dict(size=16, color='#36454F', family='Roboto'))
 
     return fig
 
@@ -291,5 +274,4 @@ def download_plotly_static(fig, gene, generef):
 
 def img_to_bytes(img_path):
     img_bytes = Path(img_path).read_bytes()
-    encoded = base64.b64encode(img_bytes).decode()
-    return encoded
+    return base64.b64encode(img_bytes).decode()

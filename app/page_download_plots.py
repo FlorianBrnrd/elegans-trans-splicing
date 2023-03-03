@@ -51,8 +51,8 @@ def invalid_name_error(gene_list, container):
 
 
 def download_plots():
-    #### basic settings
 
+    #### basic settings
     # kaleido settings
     pio.kaleido.scope.chromium_args = ("--headless", "--no-sandbox", "--single-process", "--disable-gpu")
 
@@ -64,30 +64,31 @@ def download_plots():
     st.markdown(_style, unsafe_allow_html=True)
 
     #### user input
-
     method_txt = '<span style="font-size:110%; font-weight: bold;">Select input method:</span>'
     st.markdown(method_txt, unsafe_allow_html=True)
-
     method = st.radio('', options=['Type gene name(s)', 'Upload from file (.txt)'])
 
     if method == 'Type gene name(s)':
-
         type_text = '<span style="font-size:110%; font-weight: bold;">Type one gene name per line:</span>'
         st.markdown(type_text, unsafe_allow_html=True)
 
         _input = st.text_area('', value="", height=200, max_chars=500)
 
     elif method == 'Upload from file (.txt)':
+        upload_text = '<span style="font-size:110%;font-weight:bold;">' \
+                      'Upload a .txt file (one gene name per line):</span>'
 
-        upload_text = '<span style="font-size:110%; font-weight: bold;">Upload a .txt file (one gene name per line):</span>'
         st.markdown(upload_text, unsafe_allow_html=True)
         _input = st.file_uploader('', accept_multiple_files=False, type=['txt'])
 
     else:
         _input = None
 
-    #### validation of user input
+    txt = '*(Only plots showing trans-splicing per positions will be generated, ' \
+          'expanded features annotations are currently not available for download.)*'
+    st.write(txt)
 
+    #### validation of user input
     latest_iteration = st.empty()
     latest_iteration.markdown(' ')
     processing = st.empty()
@@ -95,7 +96,6 @@ def download_plots():
     generate = processing.button('Validate') if _input else False
 
     #### processing
-
     if generate:
 
         # parse input
@@ -125,7 +125,7 @@ def download_plots():
 
                 # update text
                 titleplot = f'{common} ({refgene})' if common != refgene else str(refgene)
-                percent = round(n/ nb * 100)
+                percent = round(n/nb*100)
                 latest_iteration.write(f'processing {titleplot} - Completed:{n}/{nb} ({percent}%)')
 
                 # update bar
@@ -144,10 +144,8 @@ def download_plots():
                 pdf.add_page()
                 pdf.image(f"fig{n}.png", x=15, y=20, h=150, w=200)
 
-
                 # remove figures when added to pdf report to free space
                 os.remove(f"fig{n}.png")
-
 
             # finally
             my_bar = processing.progress(100)
@@ -157,9 +155,9 @@ def download_plots():
 
             # download report
             with open('plots_archive.pdf', 'rb') as pdf_file:
-                PDFbyte = pdf_file.read()
+                pdfbytes = pdf_file.read()
 
-            st.download_button(label='Download file', data=PDFbyte, file_name='elegans_trans-splicing_plots.pdf',
+            st.download_button(label='Download file', data=pdfbytes, file_name='elegans_trans-splicing_plots.pdf',
                                mime='application/octet-stream')
 
             os.remove("plots_archive.pdf")

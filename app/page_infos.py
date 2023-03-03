@@ -2,8 +2,8 @@ import streamlit as st
 
 
 def show_title():
-    txt = 'Quantitative analysis of <i>C. elegans</i> transcripts by Nanopore direct-cDNA sequencing reveals terminal ' \
-          'hairpins in non trans-spliced mRNAs.'
+    txt = 'Quantitative analysis of <i>C. elegans</i> transcripts by Nanopore direct-cDNA sequencing reveals terminal' \
+          ' hairpins in non trans-spliced mRNAs.'
     txt2 = 'Florian Bernard, Delphine Dargere, Oded Rechavi, Denis Dupuy.'
 
     legend_html = f'<span style="font-size:140%;"><b>{txt}</b></span><br><span style="font-size:110%;">{txt2}</span>'
@@ -51,7 +51,7 @@ def show_contacts():
     github = """[![Github](https://badgen.net/badge/icon/github?icon=github&label)](https://github.com/FlorianBrnrd)"""
     twitter = """[![Twitter](https://badgen.net/badge/icon/twitter?icon=twitter&label)](https://twitter.com/florianbrnrd)"""
 
-    full = devname + """<br>""" + github + '     ' + twitter
+    full = f"""{devname}<br>{github}     {twitter}"""
     st.markdown(full, unsafe_allow_html=True)
 
 
