@@ -132,7 +132,8 @@ def interactive_plots():
 
         with tab2:
 
-            if result := chose_isoform_to_plot(gene, feature_dataset, transcript_length, exons_coord):
+            result = chose_isoform_to_plot(gene, feature_dataset, transcript_length, exons_coord)
+            if result:
                 isoform, features_plots = result
 
                 if features_plots:
