@@ -229,7 +229,7 @@ def chose_isoform_to_plot(gene, feature_dataset, transcript_length, exons_coord)
         isoform = st.selectbox('**Select isoform:**', isoforms, index=0)
 
     with cols[1]:
-        st.write('#')
+        st.write('# ')
         plot_button = st.button('Generate plot')
 
     if plot_button:
@@ -247,7 +247,7 @@ def features_legend():
 
     legend_header = '<span style="font-size:150%; font-weight: bold;">Figure legend:</span>'
     st.markdown(legend_header, unsafe_allow_html=True)
-    st.write('####')
+    st.write('#### ')
 
     cols = st.columns([0.5, 0.03, 0.47])
 

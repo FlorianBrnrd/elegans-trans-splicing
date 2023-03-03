@@ -52,7 +52,7 @@ def chose_gene(GENES, GENESNAME):
 def legend():
     legend_header = '<span style="font-size:150%; font-weight: bold;">Figure legend:</span>'
     st.markdown(legend_header, unsafe_allow_html=True)
-    st.write('##')
+    st.write('## ')
 
     cols = st.columns([0.22, 0.03, 0.75])
 
@@ -154,7 +154,7 @@ def interactive_plots():
                             st.markdown(isoform_header, unsafe_allow_html=True)
 
                         # show plot legend
-                        st.write('#')
+                        st.write('# ')
                         features_legend()
 
 
