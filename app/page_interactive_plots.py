@@ -102,7 +102,7 @@ def interactive_plots():
 
     # open ref files and cache them
     genes, exons, dataset, GENES, GENESNAME, ATGPOSITIONS = get_reference_files()
-    #transcript_length, exons_coord, feature_dataset = get_read_features_files()
+    transcript_length, exons_coord, isoforms = get_read_features_files()
 
     # chose gene to plot
     gene, refgene = chose_gene(GENES, GENESNAME)
@@ -132,8 +132,8 @@ def interactive_plots():
 
         with tab2:
 
-            #result = chose_isoform_to_plot(gene, feature_dataset, transcript_length, exons_coord)
-            result = None
+            result = chose_isoform_to_plot(gene, isoforms, transcript_length, exons_coord)
+
             if result:
                 isoform, features_plots = result
 
