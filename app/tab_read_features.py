@@ -91,7 +91,6 @@ def plotly_isoform_structure(fig, isoform, transcript_length, exons_coord):
     return transcript_start, transcript_end
 
 
-@st.cache_data(show_spinner=False)
 def plot_read_features(isoform, isoform_table, transcript_length, exons_coord):
 
     totreads = len(isoform_table)
@@ -242,7 +241,6 @@ def chose_isoform_to_plot(gene, feature_dataset, transcript_length, exons_coord)
         return None
 
 
-@st.cache_data(show_spinner=False)
 def features_legend():
 
     legend_header = '<span style="font-size:150%; font-weight: bold;">Figure legend:</span>'
